@@ -43,6 +43,9 @@ Below shows the experiment result of our oss-3B version compared with other base
 Our latest internal version of HeartMuLa-7B achieves **comparable performance with Suno** in terms of musicality, fidelity and controllability. If you are interested, welcome to reach us out via heartmula.ai@gmail.com
 
 ## 📰 News
+Join on Discord! [<img alt="join discord" src="https://img.shields.io/discord/842440537755353128?color=%237289da&logo=discord"/>](https://discord.gg/BKXF5FgH)
+
+
 - 🫶 **20 Jan. 2026** 
     
     [Benji](https://github.com/benjiyaya) has created a wonderful [ComfyUI custom node](https://github.com/benjiyaya/HeartMuLa_ComfyUI) for HeartMuLa. Thanks Benji!
@@ -200,3 +203,19 @@ This repository is licensed under the Apache 2.0 License.
 
 ## 📬 Contact
 If you are interested in HeartMuLa, feel free to reach us at heartmula.ai@gmail.com
+
+Welcome to join us through [discord](https://discord.gg/BKXF5FgH) or Wechat group.
+
+Scan the QR code on the left to join our Wechat group. If it expires, feel free to raise an issue to remind us of updating. 
+
+If the number of group members exceeds 200, joining the group via directly scanning the QR code is restricted by WeChat. In this case, scan our team member's QR code on the right and send a request writing **HeartMuLa Group Invite**. We will invite you into the group manually.
+<p align="center">
+    <picture>
+        <source srcset="./assets/group_wx.jpeg" media="(prefers-color-scheme: dark)">
+        <img src="./assets/group_wx.jpeg" width="40%">
+    </picture>
+    <picture>
+        <source srcset="./assets/lead_wx.jpeg" media="(prefers-color-scheme: dark)">
+        <img src="./assets/lead_wx.jpeg" width="40%">
+    </picture>
+</p>
