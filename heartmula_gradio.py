@@ -470,16 +470,33 @@ def create_interface():
                     gr.Markdown("### 🎨 Creative Input")
                     tags = gr.Textbox(
                         label="Style Tags",
-                        placeholder="e.g., club house, 128 bpm, four-on-the-floor kick, bright supersaw...",
+                        placeholder="club house, female vocals, angelic, dreamy, 128 bpm, four-on-the-floor kick, offbeat open hi-hat, rolling bassline, sidechain compression, bright supersaw, riser, snare build, drop, festival energy, wide stereo",
                         lines=2,
                         info="Describe the musical style, genre, tempo, and characteristics"
                     )
                     lyrics = gr.Textbox(
                         label="Lyrics (optional)",
-                        placeholder="[Verse]\nWrite your lyrics here...\n\n[Chorus]\n...",
-                        lines=6,
+                        value=(
+                            "[Intro]\n"
+                            "Get Going Fast is so super... duper... radiant... kinetic... hyper...\n\n"
+                            "[Verse]\n"
+                            "turbo... mega... lightning-striker... star-glimmer...\n\n"
+                            "super... pulse... shimmer... ultra... hyper... turbo...\n\n"
+                            "nebula...\n\n"
+                            "[Prechorus]\n"
+                            "echo... signal... flicker... spark... drift...\n\n"
+                            "[Chorus]\n"
+                            "Get Going Fast is so super... duper... vivid... electric... soaring...\n\n"
+                            "ultra... hyper... turbo... mega... starlight...\n\n"
+                            "[Bridge]\n"
+                            "fade... rise... breathe... shine...\n\n"
+                            "[Outro]\n"
+                            "fade... rise... glow... flow... ever... onward...\n"
+                        ),
+                        lines=12,
                         info="Leave empty for instrumental"
                     )
+
                 
                 # Generation Parameters
                 with gr.Group():
