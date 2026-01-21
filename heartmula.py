@@ -103,8 +103,31 @@ class MulaSettings:
     topk: int = 50
     temperature: float = 1.0
     cfg_scale: float = 1.5
-    lyrics_text: str = "[Verse]\nWrite your lyrics here...\n"
-    tags_text: str = "piano, happy, wedding, synthesizer, romantic"
+    lyrics_text: str = (
+    "[Intro]\n"
+    "Get Going Fast is so super... duper... radiant... kinetic... hyper...\n\n"
+    "[Verse]\n"
+    "turbo... mega... lightning-striker... star-glimmer...\n\n"
+    "super... pulse... shimmer... ultra... hyper... turbo...\n\n"
+    "nebula...\n\n"
+    "[Prechorus]\n"
+    "echo... signal... flicker... spark... drift...\n\n"
+    "[Chorus]\n"
+    "Get Going Fast is so super... duper... vivid... electric... soaring...\n\n"
+    "ultra... hyper... turbo... mega... starlight...\n\n"
+    "[Verse]\n"
+    "halo... prism... glow... flow...\n\n"
+    "soft... bright... endless... weightless...\n\n"
+    "[Bridge]\n"
+    "fade... rise... breathe... shine...\n\n"
+    "[Chorus]\n"
+    "Get Going Fast is so super... duper... radiant... kinetic... hyper...\n\n"
+    "ultra... hyper... turbo... mega... starlight...\n\n"
+    "[Outro]\n"
+    "fade... rise... glow... flow... ever... onward...\n"
+    )
+
+    tags_text: str = "club house, female vocals, angelic, dreamy, 128 bpm, four-on-the-floor kick, offbeat open hi-hat, rolling bassline, sidechain compression, bright supersaw, riser, snare build, drop, festival energy, wide stereo"
     output_dir: str = "output"
     auto_open_output: bool = True
 
@@ -124,7 +147,7 @@ class MulaSettings:
             
             return MulaSettings(**{k: v for k, v in data.items() if k in MulaSettings.__dataclass_fields__})
         except Exception:
-            return MulaSettings()
+            return sMulaSettings()
 
     def save(self, path: Path) -> None:
         """Save settings to JSON file."""
@@ -580,7 +603,24 @@ class HeartMuLaApp(QWidget):
         layout.addWidget(QLabel("Lyrics:"))
         self.lyrics = QTextEdit()
         self.lyrics.setPlainText(self.settings.lyrics_text)
-        self.lyrics.setPlaceholderText("[Verse]\nWrite your lyrics here...\n\n[Chorus]\n...")
+        self.lyrics.setPlaceholderText(
+            "[Intro]\n"
+            "Get Going Fast is so super... duper... radiant... kinetic... hyper...\n\n"
+            "[Verse]\n"
+            "turbo... mega... lightning-striker... star-glimmer...\n\n"
+            "super... pulse... shimmer... ultra... hyper... turbo...\n\n"
+            "nebula...\n\n"
+            "[Prechorus]\n"
+            "echo... signal... flicker... spark... drift...\n\n"
+            "[Chorus]\n"
+            "Get Going Fast is so super... duper... vivid... electric... soaring...\n\n"
+            "ultra... hyper... turbo... mega... starlight...\n\n"
+            "[Bridge]\n"
+            "fade... rise... breathe... shine...\n\n"
+            "[Outro]\n"
+            "fade... rise... glow... flow... ever... onward...\n"
+        )
+
         self.lyrics.setMaximumHeight(150)
         self.lyrics.setStyleSheet("""
             QTextEdit {
