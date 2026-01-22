@@ -3,6 +3,25 @@
 
 <h1>A GET GOING FAST (STAND-ALONE GUI) Installation can be found here: <a href="https://heartmula.getgoingfast.pro">heartmula.getgoingfast.pro</a></h1>
 <p><hr></p>
+
+<p>Supplemental Manual Install Instructions (NVIDIA)</p>
+<P>
+<li>
+    pip install typing-extensions --force-reinstall
+</li>
+<li>
+pip uninstall torch torchaudio torchvision xformers torchao -y
+</li>
+<li>
+    pip install torch==2.4.1+cu124 torchaudio==2.4.1+cu124 torchvision==0.19.1+cu124 --index-url https://download.pytorch.org/whl/cu124 --force-reinstall
+</li>
+<li>
+    pip install torchao==0.9.0 --force-reinstall
+</li>
+    <li>
+        pip install triton-windows
+    </li>
+</P>
 <p>
 
 <p align="center">
