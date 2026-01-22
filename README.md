@@ -1,3 +1,10 @@
+<img width="1108" height="443" alt="image" src="https://github.com/gjnave/VibeVoice/blob/main/assets/yout.jpg" />
+
+
+<h1>A GET GOING FAST (STAND-ALONE GUI) Installation can be found here: <a href="https://heartmula.getgoingfast.pro">heartmula.getgoingfast.pro</a></h1>
+<p><hr></p>
+<p>
+
 <p align="center">
     <picture>
         <source srcset="./assets/logo.png" media="(prefers-color-scheme: dark)">
