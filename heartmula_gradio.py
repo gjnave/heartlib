@@ -68,6 +68,18 @@ def slugify(text: str, max_len: int = 42) -> str:
     return s
 
 
+def format_tags_for_file(tags: str) -> str:
+    """Format tags as comma-separated with no spaces."""
+    if not tags or not tags.strip():
+        return ""
+    
+    # Remove spaces after commas and convert to lowercase
+    tags = tags.strip().lower()
+    tags = ','.join([t.strip() for t in tags.split(',')])
+    
+    return tags
+
+
 # ============================================================================
 # Data Classes
 # ============================================================================
@@ -306,33 +318,45 @@ def generate_music(
         output_file = out_dir / filename
         counter += 1
     
-    # Create temp files for lyrics and tags
-    temp_dir = root / "presets" / "setsave" / "_mula_tmp"
-    temp_dir.mkdir(parents=True, exist_ok=True)
+    # Create assets directory for CLI usage
+    assets_dir = root / "assets"
+    assets_dir.mkdir(parents=True, exist_ok=True)
     
-    lyrics_file = temp_dir / "lyrics.txt"
-    tags_file = temp_dir / "tags.txt"
+    # Format tags as comma-separated with no spaces
+    formatted_tags = format_tags_for_file(tags or "")
     
-    lyrics_file.write_text((lyrics or "") + "\n", encoding="utf-8")
-    tags_file.write_text((tags or "") + "\n", encoding="utf-8")
+    # Write to assets directory (where run_music_generation.py looks by default)
+    (assets_dir / "lyrics.txt").write_text((lyrics or "") + "\n", encoding="utf-8")
+    (assets_dir / "tags.txt").write_text(formatted_tags + "\n", encoding="utf-8")
     
-    # Build command
+    # Build command - use relative paths
     python_exe = sys.executable
-    script = root / "examples" / "run_music_generation.py"
     
+    # Convert output path to relative
+    try:
+        relative_output = output_file.relative_to(root)
+        output_path_for_cli = f".\\{relative_output}"
+    except ValueError:
+        # If can't make relative, use the filename in output dir
+        output_path_for_cli = f".\\output\\{output_file.name}"
+    
+    # Use relative paths
     cmd = [
         python_exe,
-        str(script),
-        f"--model_path={model_dir}",
+        r".\examples\run_music_generation.py",
+        f"--model_path=.\\ckpt",
         f"--version={version}",
-        f"--lyrics={lyrics_file}",
-        f"--tags={tags_file}",
-        f"--save_path={output_file}",
+        r"--lyrics=.\assets\lyrics.txt",
+        r"--tags=.\assets\tags.txt",
+        f"--save_path={output_path_for_cli}",
         f"--max_audio_length_ms={max_length_sec * 1000}",
         f"--topk={topk}",
         f"--temperature={temperature}",
         f"--cfg_scale={cfg_scale}",
     ]
+    
+    # Format CLI command for display
+    cli_command = " ".join(cmd)
     
     progress(0.1, desc="Starting generation process...")
     
@@ -365,15 +389,36 @@ def generate_music(
             
             if output_file.exists():
                 log = "\n".join(output_lines[-20:])  # Last 20 lines
-                return str(output_file), f"✅ Success!\n\nSaved to: {output_file}\n\n--- Console Output (last 20 lines) ---\n{log}"
+                status_msg = (
+                    f"✅ Success!\n\n"
+                    f"Saved to: {output_file}\n\n"
+                    f"Tags: {tags or '(none)'}\n"
+                    f"Written to .\\assets\\tags.txt as: {formatted_tags}\n\n"
+                    f"--- Console Output (last 20 lines) ---\n{log}\n\n"
+                    f"--- CLI Command ---\n{cli_command}"
+                )
+                return str(output_file), status_msg
             else:
-                return None, f"⚠️ Process completed but output file not found: {output_file}"
+                status_msg = (
+                    f"⚠️ Process completed but output file not found: {output_file}\n\n"
+                    f"--- CLI Command ---\n{cli_command}"
+                )
+                return None, status_msg
         else:
             log = "\n".join(output_lines)
-            return None, f"❌ Generation failed (exit code {process.returncode})\n\n--- Console Output ---\n{log}"
+            status_msg = (
+                f"❌ Generation failed (exit code {process.returncode})\n\n"
+                f"--- Console Output ---\n{log}\n\n"
+                f"--- CLI Command ---\n{cli_command}"
+            )
+            return None, status_msg
     
     except Exception as e:
-        return None, f"❌ Error during generation:\n{str(e)}"
+        status_msg = (
+            f"❌ Error during generation:\n{str(e)}\n\n"
+            f"--- CLI Command ---\n{cli_command}"
+        )
+        return None, status_msg
 
 
 # ============================================================================
